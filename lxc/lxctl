@@ -17,7 +17,9 @@ kubeprovision()
   do
     echo "==> Bringing up $node"
     #lxc launch ubuntu:20.04 $node --profile k8s
+    # gen ssh key
     echo "==> Running provisioner script"
+    cat sshgen.sh | lxc exec $node bash
     lxc file push ~/.ssh/id_rsa.pub $node/root/.ssh/authorized_keys
     cat bootstrap.sh | lxc exec $node bash
     echo
